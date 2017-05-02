@@ -1,3 +1,4 @@
 .classpath
 .project
 *.class
+.DS_Store
