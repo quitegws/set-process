@@ -14,7 +14,7 @@ public class MySQLSet {
 	public static void main(String[] args) {
 		long startTime = System.currentTimeMillis();
 		
-		insertSets(SetUtils.generateSets(2, 1000000, 10000));
+		insertSets(SetUtils.generateSets(2, 1000000, 10000,256));
 		long endTime = System.currentTimeMillis();
 		System.out.println("insertSet time is " + (endTime - startTime) + " ms");
 

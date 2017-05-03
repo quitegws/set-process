@@ -4,13 +4,14 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import com.google.common.collect.Sets.SetView;
 
 public class SetOperation {
 	
 	public static void main(String[] args){
-		testIntersection();
+		test();
 	}
 	
 	public static void iterateSet(Set set, String name){
@@ -25,29 +26,30 @@ public class SetOperation {
 		System.out.println("iterate " + name + " in " + (endTime - startTime) + " ms\n");
 	}
 	
-	public static void testIntersection(){
-		int setNum = 2;
+	public static void test(){
+		int setNum = 5;
 		int ipNum = 1000000;
-		int intersectionIPNum = 1000;
-		Set<String>[] sets = SetUtils.generateSets(setNum, ipNum,intersectionIPNum);
+		int intersectionIPNum = 100;
+		int range = 100;
+		Set<String>[] sets = SetUtils.generateSets(setNum, ipNum, intersectionIPNum, range);
 		
 		Set set1 = forceGetIntersection(sets);
 		iterateSet(set1,"set1");
 		
 		Set set2 = guavaIntersection(sets);
-		iterateSet(set2,"set2");
+		iterateSet(ImmutableSet.copyOf(set2),"set2");
 		
-		Set set3 = JedisSet.jedisIntersection(sets);
-		iterateSet(set3,"set3");
+//		Set set3 = JedisSet.jedisIntersection(sets);
+//		iterateSet(set3,"set3");
 		
 		Set set4 = forceGetUnion(sets);
 		iterateSet(set4,"set4");
 		
 		Set set5 = guavaUnion(sets);
-		iterateSet(set5,"set5");
-		
-		Set set6 = JedisSet.jedisUnion(sets);
-		iterateSet(set6,"set6");
+		iterateSet(ImmutableSet.copyOf(set5),"set5");
+//		
+//		Set set6 = JedisSet.jedisUnion(sets);
+//		iterateSet(set6,"set6");
 	}
 	
 	public static Set<String> forceGetIntersection(Set<?>[] sets){
@@ -104,12 +106,15 @@ public class SetOperation {
 		}
 		int len = sets.length;
 		long startTime = System.currentTimeMillis();
+		Set set = new HashSet();
+		for (int i = 0; i < sets.length; i++) {
+			set = Sets.union(sets[0], sets[1]);
+		}
 		
-		SetView sv = Sets.union(sets[0], sets[1]);
 		long endTime = System.currentTimeMillis();
 		System.out.println("guavaUnion in  " 
-						+ (endTime - startTime) + " ms and result size is " + sv.size() + "\n");
-		return sv;
+						+ (endTime - startTime) + " ms and result size is " + set.size() + "\n");
+		return set;
 	}
 	
 	public static Set guavaIntersection(Set[] sets){
@@ -120,7 +125,24 @@ public class SetOperation {
 		int len = sets.length;
 		long startTime = System.currentTimeMillis();
 		
-		Set sv = (Set) Sets.intersection(sets[0], sets[1]);
+		
+		int i = 0;
+		int minLen = Integer.MAX_VALUE;
+		for (; i < len; i++)
+			minLen = sets[i].size() < minLen ? sets[i].size() : minLen;
+		i = 0;
+		for (; i < len; i++)
+			if (sets[i].size() == minLen) 
+				break;
+		
+		Set sv = sets[i];
+		
+		for (int j = 0; j < sets.length; j++) {
+			if (j != i) {
+				sv = (Set) Sets.intersection(sv, sets[j]);
+			}
+		}
+		
 		long endTime = System.currentTimeMillis();
 		System.out.println("guavaIntersection in  " 
 						+ (endTime - startTime) + " ms and result size is " + sv.size() + "\n");

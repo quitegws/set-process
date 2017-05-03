@@ -6,7 +6,7 @@ import java.util.Set;
 public class SetUtils {
 
 	//generate random ip addresses
-	public static Set<String>[] generateSets(int howManySets, int howManyIPsPerSet, int intersectionNum){
+	public static Set<String>[] generateSets(int howManySets, int howManyIPsPerSet, int intersectionNum, int range){
 		if (howManySets <= 0 || howManyIPsPerSet <= 0) {
 			System.out.println("wrong args in generateSets()");
 			return null;
@@ -16,9 +16,9 @@ public class SetUtils {
 		
 		Set intersection = new HashSet<>(intersectionNum);
 		for (int i = 0; i < intersectionNum; i++) {
-			String ipTmp = getOneRandomIPAddress(256);
+			String ipTmp = getOneRandomIPAddress(range);
 			while (intersection.contains(ipTmp)) {
-				ipTmp = getOneRandomIPAddress(256);
+				ipTmp = getOneRandomIPAddress(range);
 			}
 			intersection.add(ipTmp);
 		}
@@ -28,9 +28,9 @@ public class SetUtils {
 			set.addAll(intersection);
 			long t1 = System.currentTimeMillis();
 			for (int j = 0; j < howManyIPsPerSet - intersectionNum; j++) {
-				String ip = getOneRandomIPAddress(256);
+				String ip = getOneRandomIPAddress(range);
 				while (set.contains(ip)) {
-					ip = getOneRandomIPAddress(256);
+					ip = getOneRandomIPAddress(range);
 				}
 				set.add(ip);
 			}

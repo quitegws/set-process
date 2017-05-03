@@ -9,7 +9,7 @@ import redis.clients.jedis.JedisPoolConfig;
 public class JedisSet {
 
 	public static void main(String[] args){
-		jedisIntersection(SetUtils.generateSets(10, 1000000, 10000));
+		jedisIntersection(SetUtils.generateSets(10, 1000000, 10000, 256));
 	}
 	
 	public static Set jedisIntersection(Set<String>[] sets){
