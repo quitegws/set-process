@@ -12,7 +12,7 @@ public class JedisSet {
 		jedisIntersection(SetUtils.generateSets(10, 1000000, 10000));
 	}
 	
-	public static void jedisIntersection(Set<String>[] sets){
+	public static Set jedisIntersection(Set<String>[] sets){
 		
 		JedisPoolConfig config = new JedisPoolConfig();
 		JedisPool pool = new JedisPool(config, "localhost", 6379, 100000);
@@ -39,12 +39,11 @@ public class JedisSet {
 		jedis.del(keys);
 		jedis.close();
 		pool.close();
+		return result;
 	}
 
 
-	public static void jedisUnion(Set<String>[] sets){
-		System.out.println();
-		
+	public static Set jedisUnion(Set<String>[] sets){
 		JedisPoolConfig config = new JedisPoolConfig();
 		JedisPool pool = new JedisPool(config, "localhost", 6379, 100000);
 		Jedis jedis = pool.getResource();
@@ -67,6 +66,7 @@ public class JedisSet {
 		jedis.del(keys);
 		jedis.close();
 		pool.close();
+		return result;
 	}
 	
 }

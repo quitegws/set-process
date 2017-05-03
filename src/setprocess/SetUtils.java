@@ -14,31 +14,29 @@ public class SetUtils {
 		long startTime = System.currentTimeMillis();
 		Set<String>[] result = new HashSet[howManySets];
 		
-		String[] intersection = new String[intersectionNum];
+		Set intersection = new HashSet<>(intersectionNum);
 		for (int i = 0; i < intersectionNum; i++) {
-			intersection[i] = (int)(Math.random() * 255) + "."
-					+ (int)(Math.random() * 255) + "."
-					+ (int)(Math.random() * 255) + "."
-					+ (int)(Math.random() * 255);
+			String ipTmp = getOneRandomIPAddress(256);
+			while (intersection.contains(ipTmp)) {
+				ipTmp = getOneRandomIPAddress(256);
+			}
+			intersection.add(ipTmp);
 		}
 		
 		for (int i = 0; i < howManySets; i++) {
-			long t1 = System.currentTimeMillis();
 			Set<String> set = new HashSet<String>();
+			set.addAll(intersection);
+			long t1 = System.currentTimeMillis();
 			for (int j = 0; j < howManyIPsPerSet - intersectionNum; j++) {
-				String ip = (int)(Math.random() * 255) + "."
-							+ (int)(Math.random() * 255) + "."
-							+ (int)(Math.random() * 255) + "."
-							+ (int)(Math.random() * 255);
+				String ip = getOneRandomIPAddress(256);
+				while (set.contains(ip)) {
+					ip = getOneRandomIPAddress(256);
+				}
 				set.add(ip);
-			}
-			
-			for (int j = 0; j < intersectionNum; j++) {
-				set.add(intersection[j]);
 			}
 			result[i] = set;
 			long t2 = System.currentTimeMillis();
-			System.out.println("generate " + i + "th set done in " + (t2 - t1) + " ms");
+			System.out.println("generate " + i + "th set done in " + (t2 - t1) + " ms the size is " + result[i].size());
 		}
 		
 		long endTime = System.currentTimeMillis();
@@ -56,4 +54,16 @@ public class SetUtils {
 		System.out.println("howLongTime is " + (endTime - startTime) + " ms");
 	}
 
+	public static String getOneRandomIPAddress(int range){
+		if (range <0 || range > 256) {
+			System.err.println(range + " is not a valid range!");
+			return "";
+		}
+		String ip = (int)(Math.random() * 255) + "."
+				+ (int)(Math.random() * 255) + "."
+				+ (int)(Math.random() * 255) + "."
+				+ (int)(Math.random() * 255);
+		return ip;
+	}
+	
 }
