@@ -47,4 +47,13 @@ public class SetUtils {
 		return result;
 	}
 
+	
+	
+	public static void howLongTime(){
+		long startTime = System.currentTimeMillis();
+		
+		long endTime = System.currentTimeMillis();
+		System.out.println("howLongTime is " + (endTime - startTime) + " ms");
+	}
+
 }
