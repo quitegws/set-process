@@ -58,10 +58,10 @@ public class SetUtils {
 			System.err.println(range + " is not a valid range!");
 			return "";
 		}
-		String ip = (int)(Math.random() * 255) + "."
-				+ (int)(Math.random() * 255) + "."
-				+ (int)(Math.random() * 255) + "."
-				+ (int)(Math.random() * 255);
+		String ip = (int)(Math.random() * range) + "."
+				+ (int)(Math.random() * range) + "."
+				+ (int)(Math.random() * range) + "."
+				+ (int)(Math.random() * range);
 		return ip;
 	}
 	

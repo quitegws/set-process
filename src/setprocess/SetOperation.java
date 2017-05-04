@@ -41,8 +41,8 @@ public class SetOperation {
 		Set set2 = guavaIntersection(sets);
 		iterateSet(ImmutableSet.copyOf(set2),"set2");
 		
-//		Set set3 = JedisSet.jedisIntersection(sets);
-//		iterateSet(set3,"set3");
+		Set set3 = JedisSet.jedisIntersection(sets);
+		iterateSet(set3,"set3");
 		
 		Set set4 = forceGetUnion(sets);
 		iterateSet(set4,"set4");
@@ -50,8 +50,8 @@ public class SetOperation {
 		Set set5 = guavaUnion(sets);
 		iterateSet(ImmutableSet.copyOf(set5),"set5");
 //		
-//		Set set6 = JedisSet.jedisUnion(sets);
-//		iterateSet(set6,"set6");
+		Set set6 = JedisSet.jedisUnion(sets);
+		iterateSet(set6,"set6");
 	}
 	
 	public static Set<String> forceGetIntersection(Set<?>[] sets){
