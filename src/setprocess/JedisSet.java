@@ -36,7 +36,7 @@ public class JedisSet {
 		long t3 = System.currentTimeMillis();
 		System.out.println("redis intersection in " + (t3 - t2) + " ms" + " and result size is " + result.size());
 		System.out.println();
-		jedis.del(keys);
+//		jedis.del(keys);
 		jedis.close();
 		pool.close();
 		return result;

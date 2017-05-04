@@ -6,7 +6,8 @@ import java.util.Set;
 public class SetUtils {
 
 	//generate random ip addresses
-	public static Set<String>[] generateSets(int howManySets, int howManyIPsPerSet, int intersectionNum, int range){
+	public static Set<String>[] generateSets(int howManySets, int howManyIPsPerSet,
+												int intersectionNum, int range){
 		if (howManySets <= 0 || howManyIPsPerSet <= 0) {
 			System.out.println("wrong args in generateSets()");
 			return null;
@@ -36,7 +37,7 @@ public class SetUtils {
 			}
 			result[i] = set;
 			long t2 = System.currentTimeMillis();
-			System.out.println("generate " + i + "th set done in " + (t2 - t1) + " ms the size is " + result[i].size());
+			System.out.println("generate " + i + "th set done in " + (t2 - t1) + " ms the size is " + result[i].size() +"\n");
 		}
 		
 		long endTime = System.currentTimeMillis();
@@ -45,8 +46,6 @@ public class SetUtils {
 		return result;
 	}
 
-	
-	
 	public static void howLongTime(){
 		long startTime = System.currentTimeMillis();
 		

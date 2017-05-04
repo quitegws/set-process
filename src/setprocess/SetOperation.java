@@ -1,7 +1,9 @@
 package setprocess;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 
 import com.google.common.collect.ImmutableSet;
@@ -23,13 +25,13 @@ public class SetOperation {
 			count++;
 		}
 		long endTime = System.currentTimeMillis();
-		System.out.println("iterate " + name + " in " + (endTime - startTime) + " ms\n");
+		System.out.println("iterate " + name + " in " + (endTime - startTime) + " ms count is " + count + "\n");
 	}
 	
 	public static void test(){
-		int setNum = 5;
-		int ipNum = 1000000;
-		int intersectionIPNum = 100;
+		int setNum = 2;
+		int ipNum = 100 * 10000;
+		int intersectionIPNum = 10000;
 		int range = 100;
 		Set<String>[] sets = SetUtils.generateSets(setNum, ipNum, intersectionIPNum, range);
 		
@@ -99,7 +101,7 @@ public class SetOperation {
 		return set;
 	}
 
-	public static Set guavaUnion(Set[] sets){
+	public static Set<String> guavaUnion(Set[] sets){
 		if (sets == null || sets.length == 0) {
 			System.err.println("wrong args in guavaUnion");
 			return new HashSet();
@@ -108,7 +110,7 @@ public class SetOperation {
 		long startTime = System.currentTimeMillis();
 		Set set = new HashSet();
 		for (int i = 0; i < sets.length; i++) {
-			set = Sets.union(sets[0], sets[1]);
+			set = Sets.union(set, sets[i]);
 		}
 		
 		long endTime = System.currentTimeMillis();
@@ -117,7 +119,7 @@ public class SetOperation {
 		return set;
 	}
 	
-	public static Set guavaIntersection(Set[] sets){
+	public static Set<String> guavaIntersection(Set[] sets){
 		if (sets == null || sets.length <= 1) {
 			System.err.println("wrong args in guavaIntersection");
 			return new HashSet();
@@ -125,7 +127,12 @@ public class SetOperation {
 		int len = sets.length;
 		long startTime = System.currentTimeMillis();
 		
-		
+//		Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+//		
+//		for (int i = 0; i < sets.length; i++) {
+//			map.put(i, sets[i].size());
+//		}
+//		
 		int i = 0;
 		int minLen = Integer.MAX_VALUE;
 		for (; i < len; i++)
